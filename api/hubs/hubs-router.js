@@ -1,5 +1,5 @@
 const express = require('express');
-
+const {checkHubId} = require('./hubs-middleware.js')
 const Hubs = require('./hubs-model.js');
 const Messages = require('../messages/messages-model.js');
 
@@ -13,16 +13,8 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/:id', (req, res, next) => {
-  Hubs.findById(req.params.id)
-    .then((hub) => {
-      if (hub) {
-        res.status(200).json(hub);
-      } else {
-        res.status(404).json({ message: "Hub not found" });
-      }
-    })
-    .catch(next);
+router.get('/:id', checkHubId, (req, res, next) => {
+ res.json(req.hub);
 });
 
 router.post('/', (req, res, next) => {
@@ -82,11 +74,12 @@ router.post('/:id/messages', (req, res, next) => {
 
 
 
-router.use((error, req, res, next) => {
+router.use((error, req, res, next) => { //eslint-disable-line
 res.status(error.status || 500).json({
   message: error.message,
   customMessage: 'Something bad happend inside the hubs router',
 });
 });
+
 
 module.exports = router;
