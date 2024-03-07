@@ -25,9 +25,10 @@ function checkNewHub(req, res, next) {
          ){
      next();
     } else {
-        res.status(422).json({
+        next({
+            status: 422,
             message: 'hubs need a name'
-        })
+        });
     }
 }
 
