@@ -16,6 +16,22 @@ catch(err){
 }
 }
 
+function checkNewHub(req, res, next) {
+    const {name} = req.body;
+    if(
+        name !== undefined && 
+        typeof name === 'string'
+         && name.length
+         ){
+     next();
+    } else {
+        res.status(422).json({
+            message: 'hubs need a name'
+        })
+    }
+}
+
 module.exports = {
     checkHubId,
+    checkNewHub,
 }

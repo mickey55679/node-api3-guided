@@ -11,11 +11,11 @@ function customMorgan(req, res, next) {
   next();
 }
 function shortCircuit(req, res, next){
-  res.json('the request was short circuited')
+  res.json('the request was short circuited');
 }
 function addFriends(req, res, next) {
   req.friend = 'caleb';
-  next()
+  next();
 }
 
 server.use(morgan('dev'));
