@@ -17,9 +17,9 @@ router.get('/:id', checkHubId, (req, res, next) => {
  res.json(req.hub);
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', checkNewHub, (req, res, next) => {
   Hubs.add(req.body)
-    .then((hub) => {
+    .then(hub => {
       res.status(201).json(hub);
     })
     .catch(next);
@@ -53,7 +53,7 @@ router.get('/:id/messages', checkHubId, (req, res, next) => {
     });
 });
 
-router.post('/:id/messages', checkNewHub, (req, res, next) => {
+router.post('/:id/messages', checkHubId, (req, res, next) => {
   const messageInfo = { ...req.body, hub_id: req.params.id };
 
   Messages.add(messageInfo)

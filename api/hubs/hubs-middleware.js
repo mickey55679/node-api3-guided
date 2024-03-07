@@ -21,7 +21,7 @@ function checkNewHub(req, res, next) {
     if(
         name !== undefined && 
         typeof name === 'string'
-         && name.length
+         && name.length && name.trim().length
          ){
      next();
     } else {
